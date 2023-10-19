@@ -1,0 +1,65 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class ParkingSpot {
+    private String name;
+    private double convenience;
+    private double value;
+
+    public ParkingSpot(String name, double convenience, double value) {
+        this.name = name;
+        this.convenience = convenience;
+        this.value = value;
+    }
+
+    public double getConvenience() {
+        return convenience;
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+public class ParkingFinder {
+    public static void main(String[] args) {
+        // Simulated list of parking spots with convenience and value scores
+        List<ParkingSpot> parkingSpots = new ArrayList<>();
+        parkingSpots.add(new ParkingSpot("Parking Lot A", 8.5, 4.0));
+        parkingSpots.add(new ParkingSpot("Street Parking B", 7.0, 4.5));
+        parkingSpots.add(new ParkingSpot("Parking Garage C", 9.0, 3.5));
+        parkingSpots.add(new ParkingSpot("Mall Parking D", 6.5, 5.0));
+
+        // Find the best parking spot based on a combination of convenience and value
+        ParkingSpot bestSpot = findBestParkingSpot(parkingSpots);
+        
+        if (bestSpot != null) {
+            System.out.println("The best parking spot is: " + bestSpot.getName());
+        } else {
+            System.out.println("No suitable parking spots found.");
+        }
+    }
+
+    public static ParkingSpot findBestParkingSpot(List<ParkingSpot> spots) {
+        if (spots.isEmpty()) {
+            return null;
+        }
+
+        ParkingSpot bestSpot = spots.get(0);
+
+        for (ParkingSpot spot : spots) {
+            // You can adjust the weight for convenience and value according to your preferences
+            double score = 0.6 * spot.getConvenience() + 0.4 * spot.getValue();
+
+            if (score > (0.6 * bestSpot.getConvenience() + 0.4 * bestSpot.getValue())) {
+                bestSpot = spot;
+            }
+        }
+
+        return bestSpot;
+    }
+}
